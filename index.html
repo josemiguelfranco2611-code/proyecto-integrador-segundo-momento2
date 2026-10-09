@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Momento 2 - Gestión Dinámica DOM</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-</body>
-</html>
+
+  <div class="main-container">
+    <h1>Gestión de Datos en Tiempo Real</h1>
+
+    <!-- 1. Formulario de Captura de Datos -->
+    <section class="card">
+      <h2>1. Registrar Nuevo Elemento</h2>
+      <form id="dataForm">
+        <div class="form-group">
+          <label for="inputNombre">Nombre / Descripción:</label>
+          <input type="text" id="inputNombre" placeholder="Ej. Tarea 1 o Producto A" required>
+        </div>
+
+        <div class="form-group">
+          <label for="selectCategoria">Categoría:</label>
+          <select id="selectCategoria" required>
+            <option value="">-- Selecciona una opción --</option>
+            <option value="Trabajo">Trabajo</option>
+            <option value="Estudio">Estudio</option>
+            <option value="Personal">Personal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="inputMonto">Valor / Puntaje / Precio ($):</label>
+          <input type="number" id="inputMonto" placeholder="Ej. 50000" min="0" required>
+        </div>

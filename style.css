@@ -79,3 +79,45 @@ button {
 button:hover {
   background-color: #1d4ed8;
 }
+
+#resumenConteo {
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #2563eb;
+}
+
+.lista-resultados {
+  list-style: none;
+}
+
+.item-tarjeta {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-titulo {
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.item-categoria {
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.item-monto {
+  font-weight: bold;
+  color: #10b981;
+}

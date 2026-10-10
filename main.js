@@ -1,6 +1,6 @@
 let datosEnMemoria = [
-  { id: 1, nombre: "Planificación del Sprint", categoria: "Trabajo", monto: 120000 },
-  { id: 2, nombre: "Repaso de JavaScript DOM", categoria: "Estudio", monto: 45000 }
+  { id: 1, nombre: "Plastico", categoria: "100% Reciclable", monto: 120000 },
+  { id: 2, nombre: "Cobre", categoria: "75% Reciclable", monto: 45000 }
 ];
 
 function agregarRegistro(nombre, categoria, monto) {

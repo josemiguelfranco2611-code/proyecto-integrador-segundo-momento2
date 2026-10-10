@@ -23,7 +23,6 @@ function buscarPorCategoria(categoriaSeleccionada) {
 }
 
 const dataForm = document.getElementById("dataForm");
-
 const inputNombre = document.getElementById("inputNombre");
 const selectCategoria = document.getElementById("selectCategoria");
 const inputMonto = document.getElementById("inputMonto");
@@ -49,16 +48,17 @@ dataForm.addEventListener("submit", function (evento) {
     renderizarEnDOM(datosAmostrar);
   }
 });
+
 selectFiltro.addEventListener("change", function () {
   const categoria = selectFiltro.value;
   const resultadosFiltrados = buscarPorCategoria(categoria);
   renderizarEnDOM(resultadosFiltrados);
 });
 
-
 function renderizarEnDOM(lista) {
   listaResultados.innerHTML = ""; 
-  resumenConteo.textContent = "Total de registros" ${lista.length};
+  
+  resumenConteo.textContent = `Total de registros: ${lista.length}`;
 
   if (lista.length === 0) {
     const mensajeVacio = document.createElement("li");
@@ -74,4 +74,27 @@ function renderizarEnDOM(lista) {
     li.classList.add("item-tarjeta");
 
     const divInfo = document.createElement("div");
-  
+    divInfo.classList.add("item-info");
+
+    const spanNombre = document.createElement("span");
+    spanNombre.classList.add("item-titulo");
+    spanNombre.textContent = item.nombre;
+
+    const spanCategoria = document.createElement("span");
+    spanCategoria.classList.add("item-categoria");
+    spanCategoria.textContent = `Categoría: ${item.categoria}`;
+
+    divInfo.appendChild(spanNombre);
+    divInfo.appendChild(spanCategoria);
+
+    const spanMonto = document.createElement("span");
+    spanMonto.classList.add("item-monto");
+    spanMonto.textContent = `$${item.monto.toLocaleString('es-CO')}`;
+
+    li.appendChild(divInfo);
+    li.appendChild(spanMonto);
+
+    listaResultados.appendChild(li);
+  });
+}
+renderizarEnDOM(datosEnMemoria);

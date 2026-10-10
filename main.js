@@ -49,4 +49,29 @@ dataForm.addEventListener("submit", function (evento) {
     renderizarEnDOM(datosAmostrar);
   }
 });
+selectFiltro.addEventListener("change", function () {
+  const categoria = selectFiltro.value;
+  const resultadosFiltrados = buscarPorCategoria(categoria);
+  renderizarEnDOM(resultadosFiltrados);
+});
 
+
+function renderizarEnDOM(lista) {
+  listaResultados.innerHTML = ""; 
+  resumenConteo.textContent = "Total de registros" ${lista.length};
+
+  if (lista.length === 0) {
+    const mensajeVacio = document.createElement("li");
+    mensajeVacio.textContent = "No hay registros para mostrar en esta categoría.";
+    mensajeVacio.style.color = "#6b7280";
+    mensajeVacio.style.padding = "10px 0";
+    listaResultados.appendChild(mensajeVacio);
+    return;
+  }
+
+  lista.forEach(item => {
+    const li = document.createElement("li");
+    li.classList.add("item-tarjeta");
+
+    const divInfo = document.createElement("div");
+  

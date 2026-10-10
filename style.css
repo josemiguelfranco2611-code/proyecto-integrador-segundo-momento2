@@ -6,8 +6,8 @@
 }
 
 body {
-  background-color: #f0f2f5;
-  color: #1a1a1a;
+  background-color: white;
+  color: black;
   padding: 20px;
 }
 
@@ -19,11 +19,11 @@ body {
 h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #111827;
+  color: black;
 }
 
 .card {
-  background: #ffffff;
+  background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -32,7 +32,7 @@ h1 {
 
 .card h2 {
   font-size: 1.15rem;
-  color: #374151;
+  color: gray;
   margin-bottom: 15px;
   border-bottom: 2px solid #e5e7eb;
   padding-bottom: 8px;
@@ -48,7 +48,7 @@ label {
   font-weight: 600;
   font-size: 0.88rem;
   margin-bottom: 5px;
-  color: #4b5563;
+  color: gray;
 }
 
 input, select {
@@ -113,7 +113,7 @@ button:hover {
 
 .item-categoria {
   font-size: 0.82rem;
-  color: #6b7280;
+  color: gray;
   margin-top: 2px;
 }
 

@@ -1,26 +1,7 @@
-let datosEnMemoria = [
-  { id: 1, nombre: "Plastico", categoria: "100% Reciclable", monto: 120000 },
-  { id: 2, nombre: "Cobre", categoria: "75% Reciclable", monto: 45000 }
-];
 
-function agregarRegistro(nombre, categoria, monto) {
-  const nuevoObjeto = {
-    id: Date.now(),
-    nombre: nombre,
-    categoria: categoria,
-    monto: Number(monto)
-  };
-  
-  datosEnMemoria.push(nuevoObjeto);
-}
+const API_URL = "https://6aef5d8bb9925b27ce16dc3e.mockapi.io/API/V2/REGISTRO";
 
-function buscarPorCategoria(categoriaSeleccionada) {
-  if (categoriaSeleccionada === "Todas") {
-    return datosEnMemoria;
-  }
-
-  return datosEnMemoria.filter(item => item.categoria === categoriaSeleccionada);
-}
+let datosEnMemoria = []; // Inicia vacío, se llenará con la API
 
 const dataForm = document.getElementById("dataForm");
 const inputNombre = document.getElementById("inputNombre");
@@ -31,7 +12,56 @@ const selectFiltro = document.getElementById("selectFiltro");
 const listaResultados = document.getElementById("listaResultados");
 const resumenConteo = document.getElementById("resumenConteo");
 
-dataForm.addEventListener("submit", function (evento) {
+
+async function obtenerRegistros() {
+  try {
+    const respuesta = await fetch(API_URL);
+    datosEnMemoria = await respuesta.json();
+    
+
+    const filtroActual = selectFiltro.value;
+    renderizarEnDOM(buscarPorCategoria(filtroActual));
+  } catch (error) {
+    console.error("Error al cargar los datos de la API:", error);
+  }
+}
+
+
+async function agregarRegistro(nombre, categoria, monto) {
+  const nuevoObjeto = {
+    nombre: nombre,
+    categoria: categoria,
+    monto: Number(monto)
+  };
+
+  try {
+    const respuesta = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(nuevoObjeto)
+    });
+
+    if (respuesta.ok) {
+      await obtenerRegistros();
+    } else {
+      console.error("No se pudo guardar el registro en la API.");
+    }
+  } catch (error) {
+    console.error("Error de red al agregar:", error);
+  }
+}
+
+function buscarPorCategoria(categoriaSeleccionada) {
+  if (categoriaSeleccionada === "Todas") {
+    return datosEnMemoria;
+  }
+  return datosEnMemoria.filter(item => item.categoria === categoriaSeleccionada);
+}
+
+
+dataForm.addEventListener("submit", async function (evento) {
   evento.preventDefault();
 
   const valorNombre = inputNombre.value.trim();
@@ -39,13 +69,9 @@ dataForm.addEventListener("submit", function (evento) {
   const valorMonto = inputMonto.value;
 
   if (valorNombre && valorCategoria && valorMonto) {
-    agregarRegistro(valorNombre, valorCategoria, valorMonto);
+    await agregarRegistro(valorNombre, valorCategoria, valorMonto);
 
     dataForm.reset();
-
-    const filtroActual = selectFiltro.value;
-    const datosAmostrar = buscarPorCategoria(filtroActual);
-    renderizarEnDOM(datosAmostrar);
   }
 });
 
@@ -89,7 +115,7 @@ function renderizarEnDOM(lista) {
 
     const spanMonto = document.createElement("span");
     spanMonto.classList.add("item-monto");
-    spanMonto.textContent = `$${item.monto.toLocaleString('es-CO')}`;
+    spanMonto.textContent = `$${Number(item.monto).toLocaleString('es-CO')}`;
 
     li.appendChild(divInfo);
     li.appendChild(spanMonto);
@@ -97,4 +123,5 @@ function renderizarEnDOM(lista) {
     listaResultados.appendChild(li);
   });
 }
-renderizarEnDOM(datosEnMemoria);
+
+obtenerRegistros();

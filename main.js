@@ -2,7 +2,7 @@
 const URL_REGISTROS  = "https://6aef5d8bb9925b27ce16dc3e.mockapi.io/API/V2/REGISTRO";
 const URL_CATEGORIAS = "https://6aef5cb9b9925b27ce16db60.mockapi.io/api/v1/Categoria";
 const URL_RESUMEN    = "https://6aef5cb9b9925b27ce16db60.mockapi.io/api/v1/Resumen";
-const URL_OTRO       = "https://tu-id-4.mockapi.io/api/v1/otro-recurso";
+const URL_OTRO       = "https://6af79bf99bdd097c326e2995.mockapi.io/api/v1/Lista";
 
 let datosEnMemoria = [];
 

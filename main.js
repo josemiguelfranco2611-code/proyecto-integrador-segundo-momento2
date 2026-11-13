@@ -1,31 +1,51 @@
 
-const API_URL = "https://6aef5d8bb9925b27ce16dc3e.mockapi.io/API/V2/REGISTRO";
+const URL_REGISTROS  = "https://6aef5d8bb9925b27ce16dc3e.mockapi.io/API/V2/REGISTRO";
+const URL_CATEGORIAS = "https://6aef5cb9b9925b27ce16db60.mockapi.io/api/v1/Categoria";
+const URL_RESUMEN    = "https://6aef5cb9b9925b27ce16db60.mockapi.io/api/v1/Resumen";
+const URL_OTRO       = "https://tu-id-4.mockapi.io/api/v1/otro-recurso";
 
-let datosEnMemoria = []; // Inicia vacío, se llenará con la API
+let datosEnMemoria = [];
 
 const dataForm = document.getElementById("dataForm");
 const inputNombre = document.getElementById("inputNombre");
 const selectCategoria = document.getElementById("selectCategoria");
 const inputMonto = document.getElementById("inputMonto");
 const selectFiltro = document.getElementById("selectFiltro");
-
 const listaResultados = document.getElementById("listaResultados");
 const resumenConteo = document.getElementById("resumenConteo");
 
-
 async function obtenerRegistros() {
   try {
-    const respuesta = await fetch(API_URL);
+    const respuesta = await fetch(URL_REGISTROS);
     datosEnMemoria = await respuesta.json();
     
-
     const filtroActual = selectFiltro.value;
-    renderizarEnDOM(buscarPorCategoria(filtroActual));
+    const datosFiltrados = buscarPorCategoria(filtroActual);
+    renderizarEnDOM(datosFiltrados);
   } catch (error) {
-    console.error("Error al cargar los datos de la API:", error);
+    console.error("Error al cargar los datos desde la API:", error);
   }
 }
 
+async function consultarCategoriasAPI() {
+  try {
+    const respuesta = await fetch(URL_CATEGORIAS);
+    const datos = await respuesta.json();
+    console.log("Datos de Categorías (MockAPI 2):", datos);
+  } catch (error) {
+    console.error("Error al consultar categorías:", error);
+  }
+}
+
+async function consultarResumenAPI() {
+  try {
+    const respuesta = await fetch(URL_RESUMEN);
+    const datos = await respuesta.json();
+    console.log("Datos de Resumen (MockAPI 3):", datos);
+  } catch (error) {
+    console.error("Error al consultar resumen:", error);
+  }
+}
 
 async function agregarRegistro(nombre, categoria, monto) {
   const nuevoObjeto = {
@@ -35,7 +55,7 @@ async function agregarRegistro(nombre, categoria, monto) {
   };
 
   try {
-    const respuesta = await fetch(API_URL, {
+    const respuesta = await fetch(URL_REGISTROS, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -44,6 +64,7 @@ async function agregarRegistro(nombre, categoria, monto) {
     });
 
     if (respuesta.ok) {
+      // Si se guardó con éxito, recargamos la lista desde la nube
       await obtenerRegistros();
     } else {
       console.error("No se pudo guardar el registro en la API.");
@@ -60,7 +81,6 @@ function buscarPorCategoria(categoriaSeleccionada) {
   return datosEnMemoria.filter(item => item.categoria === categoriaSeleccionada);
 }
 
-
 dataForm.addEventListener("submit", async function (evento) {
   evento.preventDefault();
 
@@ -70,7 +90,6 @@ dataForm.addEventListener("submit", async function (evento) {
 
   if (valorNombre && valorCategoria && valorMonto) {
     await agregarRegistro(valorNombre, valorCategoria, valorMonto);
-
     dataForm.reset();
   }
 });
@@ -125,3 +144,5 @@ function renderizarEnDOM(lista) {
 }
 
 obtenerRegistros();
+consultarCategoriasAPI();
+consultarResumenAPI();
